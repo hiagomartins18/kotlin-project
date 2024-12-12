@@ -2,6 +2,7 @@ package com.example.orgs.ui.activity
 
 import android.app.Activity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orgs.R
@@ -9,11 +10,10 @@ import com.example.orgs.model.Produtos
 import com.example.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
 import java.math.BigDecimal
 
-class MainActivity : Activity() { // Activity = Tela
+class MainActivity : AppCompatActivity(R.layout.activity_main) { // Activity = Tela
 
     override fun onCreate(savedInstanceState: Bundle?) { // Criação de Views
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main) // Para adicionar uma view da pastas res/layout.
 
         // Evitar utilizar valores em Layout, conteudo da Activity sempre no código fonte.
         // Binding com layout.
