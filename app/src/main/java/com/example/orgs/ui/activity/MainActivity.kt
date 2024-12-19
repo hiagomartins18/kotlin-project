@@ -1,39 +1,54 @@
 package com.example.orgs.ui.activity
 
-import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orgs.R
-import com.example.orgs.model.Produtos
+import com.example.orgs.dao.ProdutosDao
 import com.example.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
-import java.math.BigDecimal
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) { // Activity = Tela
 
-    override fun onCreate(savedInstanceState: Bundle?) { // Criação de Views
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Evitar utilizar valores em Layout, conteudo da Activity sempre no código fonte.
-        // Binding com layout.
+        // utilizar o onCreate para dados estaticos desde o inicio do app
 
-//        val nome: TextView = findViewById<TextView>(R.id.TituloDesc)
-//        nome.text = "Cesta de Frutas"
-//
-//        val descricao: TextView = findViewById<TextView>(R.id.descricao)
-//        descricao.text = "Manga, Uva e Morango"
-//
-//        val preco: TextView = findViewById<TextView>(R.id.valor)
-//        preco.text = "19.90"
+        // Variável criada para o Floating Button (Botão de Adicionar)
+        val fab = findViewById<FloatingActionButton>(R.id.floatingActionButton)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
-        recyclerView.adapter = ListaProdutosAdapter(context = this, produtos = listOf(
-            Produtos(nome = "Teste1", descricao = "test desc", valor = BigDecimal("19.99")),
-            Produtos(nome = "Teste2", descricao = "test desc", valor = BigDecimal("21.99"))
-        ))
-        recyclerView.layoutManager = LinearLayoutManager(this)
-
+        // Funcão de onClick dada ao botão
+        // Utilizado o Intent para solicitar a ação do FormProduto
+        fab.setOnClickListener {
+            val intent = Intent(this, FormProdutoActivity::class.java)
+            startActivity(intent)
+        }
     }
 
+    override fun onResume() {
+
+        // Utilizamos no onResume em componentes que serão atualizados durante o uso da activity
+
+        super.onResume()
+
+        // Aqui criamos a variável da nossa recyclerview, criamos a recyclerview como forma
+        // de reutilizar os componentes. Nesse caso, cada item da Lista.
+        // ActivityFormProduto
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
+
+        // Aqui buscamos os dados do DAO
+        val dao = ProdutosDao()
+        Log.i("MainActivity", "onCreate: ${dao.buscaTodos()}")
+
+        //
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = ListaProdutosAdapter(context = this, produtos = dao.buscaTodos())
+
+        // deixar no onResume o que for atualizado
+
+    }
 }

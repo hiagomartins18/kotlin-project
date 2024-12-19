@@ -14,19 +14,6 @@ class ListaProdutosAdapter(
     private val produtos: List<Produtos>
 ) : RecyclerView.Adapter<ListaProdutosAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View):RecyclerView.ViewHolder(view) {
-
-        fun vincula(produto: Produtos) {
-            val nome = itemView.findViewById<TextView>(R.id.TituloDesc)
-            nome.text = produto.nome
-
-            val descricao = itemView.findViewById<TextView>(R.id.descricao)
-            descricao.text = produto.descricao
-
-            val valor = itemView.findViewById<TextView>(R.id.valor)
-            valor.text = produto.valor.toString()
-        }
-    }
 
     // ViewHolder = Responsavel por pegar views e bindar.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,6 +28,20 @@ class ListaProdutosAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val produto = produtos[position]
         holder.vincula(produto)
+    }
+
+    class ViewHolder(view: View):RecyclerView.ViewHolder(view) {
+
+        fun vincula(produto: Produtos) {
+            val nome = itemView.findViewById<TextView>(R.id.TituloDesc)
+            nome.text = produto.nome
+
+            val descricao = itemView.findViewById<TextView>(R.id.descricao)
+            descricao.text = produto.descricao
+
+            val valor = itemView.findViewById<TextView>(R.id.valor)
+            valor.text = produto.valor.toString()
+        }
     }
 
 }
